@@ -1,0 +1,44 @@
+void setup() {
+  // put your setup code here, to run once:
+  ledControlSetup();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  getPINARRAY();
+  getNUMBEROFLEDS();
+  knipperRij();
+  ledControlSetLedOn(PINARRAY[5]);
+  delay(500);
+  ledControlSetLedOff(PINARRAY[5]);
+  delay(500);
+  ledControlAllLedsOn();
+  delay(500);
+  ledControlAllLedsOff();
+  delay(500);
+}
+
+//void sketchLedjes(int nLeds, int nRijen) {
+//  nRij = 1;
+//  if(nRij = 
+//  for(int nLed = 1; nLed <= nLeds; nLed++) {
+//    ledControlSetLedOn(PINARRAY[nLed]);
+//    delay(500);
+//    ledControlSetLedOff(PINARRAY[nLed]);
+//  }
+//}
+//
+//void sketchRijLedjes(int nRijen) {
+//  for(int nrij = 1; nRij <= nRijen; nRij++) {
+//    
+//  }
+//}
+
+void knipperRij(){
+  for(int i=0; i < NUMBEROFLEDS; i++) {
+    ledControlSetLedOn(PINARRAY[i]);
+    delay(500);
+    ledControlSetLedOff(PINARRAY[i]);
+  }
+}
+
