@@ -28,3 +28,18 @@ byte zetOpNul(byte input, int volgNummerVanafRechts) {
   return(input & matchPatroon);
 }
 
+byte zetOpEen(byte input, int volgNummerVanafRechts){
+  byte matchPatroon = B00000001;
+  matchPatroon = matchPatroon << volgNummerVanafRechts;
+  return(input | matchPatroon);
+}
+
+byte toggleBit(byte input, int volgNummerVanafRechts) {
+  byte matchPatroon = B00000001 << volgNummerVanafRechts;
+  if((input & matchPatroon) == (volgNummerVanafRechts + 1)) {
+    zetOpNull(input, volgNummerVanafRechts);
+  } else {
+    zetOpEen(input, volgNummerVanafRechts);
+  }
+}
+
