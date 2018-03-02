@@ -5,19 +5,28 @@ final int BAUDRATE = 9600;
 final int VOLGNUMMER = 0;
 
 void setup() {
- String portName = Serial.list()[VOLGNUMMER];
- serielePoort = new Serial(this, portName, BAUDRATE);
+  String portName = Serial.list()[VOLGNUMMER];
+  serielePoort = new Serial(this, portName, BAUDRATE);
 }
 
 void draw() {
- if (serielePoort.available() > 0) {
- String gelezenWaarden = serielePoort.readStringUntil('\n');
- int sum;
- for (int i = 0; i < ; i++) {
-    sum = (sum + gelezenWaarden.charAt(i)) % 128;
- }
- if(sum == int(list[list.length - 1])) {
- println(list[list.length -1]);
- }
- }
+  if (serielePoort.available() > 0) {
+    String gelezenWaarden = serielePoort.readStringUntil(127);
+    if (gelezenWaarden != null) {
+      char[] deData = new char[3];
+      deData[0] = gelezenWaarden.charAt(1);
+      deData[1] = gelezenWaarden.charAt(2);
+      deData[2] = gelezenWaarden.charAt(3);
+      if (gelezenWaarden.charAt(4) == genereerChecksum(deData, 3));
+      println(gelezenWaarden);
+    }
+  }
+}
+
+int genereerChecksum(char waardes[], int nWaardes) {
+  int sum = 0;
+  for (int i = 0; i < nWaardes; i++) {
+    sum = (sum + waardes[i]) % 127;
+  }
+  return sum;
 }
