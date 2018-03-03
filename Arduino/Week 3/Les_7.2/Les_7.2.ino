@@ -1,7 +1,7 @@
 const int MEETPIN = A0;
 long waarde;
 unsigned long previousMillis = 0;
-int vertraging; //miliseconden
+unsigned long vertraging; //miliseconden
 boolean ledsZijnAan[] = {false, true};
 
 void setup() {
@@ -12,19 +12,24 @@ void setup() {
   waarde = analogRead(MEETPIN);
   ledControlSetLedOff(0);
   ledControlSetLedOn(1);
+  bepaalVertraging();
 }
 
 void loop() {
   unsigned long currentMillis = millis();
-  bepaalVertraging();
   if (currentMillis - previousMillis >= vertraging) {
     previousMillis = currentMillis;
-    if (ledsZijnAan[0] && !ledsZijnAan[1]) {
+    bepaalVertraging();
+    if (ledsZijnAan[0] && (ledsZijnAan[1] == false)) {
       ledControlSetLedOff(0);
       ledControlSetLedOn(1);
-    } else if (ledsZijnAan[1] && !ledsZijnAan[0]) {
+      ledsZijnAan[0] = false;
+      ledsZijnAan[1] = true;
+    } else if (ledsZijnAan[1] && (ledsZijnAan[0]== false)) {
       ledControlSetLedOn(0);
       ledControlSetLedOff(1);
+      ledsZijnAan[0] = true;
+      ledsZijnAan[1] = false;
     }
   }
 }
