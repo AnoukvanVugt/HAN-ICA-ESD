@@ -40,13 +40,13 @@ char generateWinddirection() {
   int potValue = mapfunctie(getPotValue(), 0, 1023, 0, 360);
   char winddirections [] = {'N', 'O', 'Z', 'W'};
   char winddirection;
-  if(potValue >= 45 && potValue << 135) {
+  if(potValue >= 45 && potValue < 135) {
     winddirection = winddirections[1];
     setShiftRegister(B11111100);
-  } else if(potValue >= 135 && potValue << 255) {
+  } else if(potValue >= 135 && potValue < 255) {
     winddirection = winddirections[2];
     setShiftRegister(B11011010);
-  } else if(potValue >= 255 && potValue << 315) {
+  } else if(potValue >= 255 && potValue < 315) {
     winddirection = winddirections[3];
     setShiftRegister(B01111100);
   } else {
