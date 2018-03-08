@@ -1,7 +1,7 @@
 unsigned long previousMillis;
 int totaalCyclusTijd = 20; //milliseconden
 float dutyCycle;
-int aanTijd = totaalCyclusTijd * dutyCycle;
+float aanTijd;
 
 void setup() {
   // put your setup code here, to run once:
@@ -14,30 +14,39 @@ void loop() {
   // put your main code here, to run repeatedly:
   unsigned long currentMillis = millis();
   int input = bepaalSerialInput();
-  setDutyCycle(input);
+  setCycleTimes(input);
   if (currentMillis - previousMillis >= aanTijd) {
-    ledControlSetLedOff(0);
+    if (aanTijd < 10) {
+      ledControlSetLedOff(0);
+      //Serial.println("Ik ben uit.");
+    }
   }
   if (currentMillis - previousMillis >= totaalCyclusTijd) {
     previousMillis = currentMillis;
-    ledControlSetLedOn(0);
+    if (aanTijd > 0) {
+      ledControlSetLedOn(0);
+      //Serial.println("Ik ben aan.");
+    }
   }
 }
 
 int bepaalSerialInput() {
   if (Serial.available() > 0) {
-    int input = Serial.read();
+    int input = Serial.parseInt();
     Serial.print("De input is: ");
-    Serial.println(input, DEC);
+    Serial.println(input);
     return input;
   }
 }
 
-void setDutyCycle(int input) {
-  for (int i = 1; i <= 10; i++) {
+void setCycleTimes(int input) {
+  for (float i = 0; i <= 10; i++) {
     if (input == i) {
       dutyCycle = i / 10;
     }
   }
+  aanTijd = totaalCyclusTijd * dutyCycle;
+  //Serial.println("De aanTijd is: ");
+  //Serial.println(aanTijd);
 }
 
