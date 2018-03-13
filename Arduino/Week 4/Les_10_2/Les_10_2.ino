@@ -15,7 +15,7 @@ void setup() {
   Serial.begin(9600);
   ledControlSetup();
   previousMillis = millis();
-  setCyclusTimJes();
+  setCyclusTimes();
   greenBlinked = true;
 }
 
@@ -68,7 +68,7 @@ void setLedGreen(unsigned long currentMillis) {
 }
 
 void setCyclusTimes() {
-  totalCyclusTime = 20; //milliseconden
+  totalCyclusTime = 1000; //milliseconden
   dutyCycleRed = 0.2;
   offTimeRed = totalCyclusTime - (totalCyclusTime * dutyCycleRed);
   dutyCycleBlue = 0.5;

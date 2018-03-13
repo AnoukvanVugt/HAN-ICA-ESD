@@ -1,5 +1,5 @@
 unsigned long previousMillis;
-int totaalCyclusTijd = 20; //milliseconden
+int totaalCyclusTijd = 1000; //milliseconden
 float dutyCycle;
 float aanTijd;
 
