@@ -1,27 +1,31 @@
 #include <Servo.h>
 const int SERVOPIN = 9;
 Servo servo;
-int valuesPotMeter[] = new int [1023];
 unsigned long previousMillis;
-int interval = 20; //milliseconden
+const int INTERVAL = 20; //milliseconden
+boolean turning = true;
+int currentPosition = 0;
+int target = 0;
 
 void setup() {
+  Serial.begin(9600);
   servo.attach(SERVOPIN);
   potControlSetup();
   previousMillis = millis();
 }
 
 void loop() {
+  target = mapfunction(getPotValue(), 0, 1023, 0, 180);
   unsigned long currentMillis = millis();
-  for(int currentPlaceInArray = 0; currentPlaceInArray < 1023; currentPlaceInArray++) {
-    if(currentPlaceInArray = getPotValue()) {
-    int valuePotMeter = mapfunction(getPotValue(), 0, 1023, 0, 180);
-    valuesPotMeter[currentPlaceInArray] = valuePotMeter;
-    }
-  }
-  if(currenMillis-previousMillis >= interval) {
-    for(int currentPlaceInArray = 0; currentPlaceInArray < 1023; currentPlaceInArray++) {
-      servo.write(valuesPotMeter[currentPlaceInArray]);
+  if(turning) {
+    if(currentMillis - previousMillis >= INTERVAL) {
+      if(target > currentPosition) {
+        currentPosition++;
+      } else {
+        currentPosition--;
+      }
+      servo.write(currentPosition);
+      previousMillis = currentMillis;
     }
   }
 }
